@@ -25,7 +25,7 @@ class celestialbody:
     def twobodyforce(self, gravity, secondbodymass, secondbodyposition): 
         magnitudevector = self.getmagnitude(secondbodyposition)
         absoluteforce = (gravity * self.mass * secondbodymass)/np.square(magnitudevector)
-        vectorforce = absoluteforce * (self.getunitvector(magnitudevector)) * -1
+        vectorforce = absoluteforce * (self.getunitvector(magnitudevector)) 
         return vectorforce
     
     #For clarity of code, This function just returns values and then update pos and vel from main.py
