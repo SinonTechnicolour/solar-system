@@ -77,7 +77,7 @@ def update_point(n, xyz, i,  point):
     if(n%3==2):
         i = n + 1 
 
-
+    print([xyz[i][0]],[xyz[i+1][1]])
     point.set_data([xyz[i][0]],[xyz[i+1][1]])
     point.set_3d_properties([xyz[i+2][2]])
     
