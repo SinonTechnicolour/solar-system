@@ -16,8 +16,8 @@ class celestialbody:
     def acceleration(self): 
         return (self.currentcombinedforce / self.mass)
     
-    def getmagnitudevector(self, secondposition):
-        return np.sqrt(np.square(secondposition - self.currentpos))
+    def getmagnitude(self, secondposition):
+        return np.sqrt(np.square(secondposition) + np.square(self.currentpos))
 
     def getunitvector(self, magnitudevector):
         return (self.currentpos/magnitudevector)
