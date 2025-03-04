@@ -7,7 +7,6 @@ from cbclass import Moon as m
 
 print("hello world")
 
-mpl.use("GTK3Cairo")
 
 #takes the value of gravity in use and the list of celestialbodies and adds the forces to the list of bodies
 def addallforcesbetweenplanetstodict(gravityvalue, listofcbs): 
@@ -67,7 +66,7 @@ bsg=6.6743e-11
 gravity=bsg 
 
 # default timestep
-defaulttimestep = 1000
+defaulttimestep = 100000
 # timestep
 t = defaulttimestep
 
@@ -92,14 +91,14 @@ updatecbspositionandvelocity(cbsforces, t )
 cbspoints = basecbs
 
 #mpl
-fig = plt.figure(figsize=(100,100))
+fig = plt.figure()
 
 ax = fig.add_subplot(projection='3d')
 ax.set_xlim3d(-5e11, 5e11)
 ax.set_ylim3d(-5e11, 5e11)
 ax.set_zlim3d(-5e11, 5e11)
 
-ax.set_box_aspect((100, 100, 100))
+#ax.set_box_aspect((100, 100, 100))
 
 for key in cbspoints.keys():
         key.point, = ax.plot([key.currentpos[0]],[key.currentpos[1]],[key.currentpos[2]], marker="o" )
