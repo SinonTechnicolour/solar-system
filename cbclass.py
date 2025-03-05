@@ -19,13 +19,13 @@ class celestialbody:
         distance = secondbodyposition - self.currentpos
         return np.linalg.norm(distance)
 
-    def getunitvector(self, magnitudevector):
-        return (self.currentpos/magnitudevector)
+    def getunitvector(self, magnitude, secondbodyposition):
+        return ((secondbodyposition - self.currentpos)/magnitude)
     
     def twobodyforce(self, gravity, secondbodymass, secondbodyposition): 
-        magnitudevector = self.getmagnitude(secondbodyposition)
-        absoluteforce = (gravity * self.mass * secondbodymass)/np.square(magnitudevector)
-        vectorforce = absoluteforce * (self.getunitvector(magnitudevector)) 
+        magnitude = self.getmagnitude(secondbodyposition)
+        absoluteforce = (gravity * self.mass * secondbodymass)/np.square(magnitude)
+        vectorforce = absoluteforce * (self.getunitvector(magnitude, secondbodyposition)) 
         return vectorforce
     
     #For clarity of code, This function just returns values and then update pos and vel from main.py

@@ -28,7 +28,7 @@ def addallforcesbetweenplanetstodict(gravityvalue, listofcbs):
                 pass
             else:
                 listofcbs[bodyi][j]=bodyi.twobodyforce(gravityvalue, bodyj.mass, bodyj.currentpos) 
-                listofcbs[bodyj][i]=(-1*(listofcbs[bodyi][i+1]))
+                listofcbs[bodyj][i]=(-1*(listofcbs[bodyi][j]))
                 j+=1
     return listofcbs
 
@@ -66,7 +66,7 @@ bsg=6.6743e-11
 gravity=bsg 
 
 # default timestep
-defaulttimestep = 100000
+defaulttimestep = 1000
 # timestep
 t = defaulttimestep
 
@@ -78,7 +78,7 @@ basecbs = {
     jupiter:{},
     saturn:{},
     neptune:{},
-    mercury:{},
+#    mercury:{},
     venus:{},
     uranus:{}
 }
@@ -98,6 +98,8 @@ ax.set_xlim3d(-5e11, 5e11)
 ax.set_ylim3d(-5e11, 5e11)
 ax.set_zlim3d(-5e11, 5e11)
 
+
+
 #ax.set_box_aspect((100, 100, 100))
 
 for key in cbspoints.keys():
@@ -106,13 +108,13 @@ for key in cbspoints.keys():
 
 #square to help guide where middle is 
 ax.plot(0,0,0, marker = "s")
-newpoint, = ax.plot([1],[1],[1], marker="o")
-print(newpoint)
+
 #updates the position of the point based on the frame, each frame gives the next value in the x, y and z axis
 def update_points(frames, cbspoints, listofcbs, timestep, gravity):
     print(frames)
-    listofcbs = addallforcesbetweenplanetstodict(gravity, listofcbs)
-    updatecbspositionandvelocity(listofcbs, timestep)
+    for i in range(100):
+        listofcbs = addallforcesbetweenplanetstodict(gravity, listofcbs)
+        updatecbspositionandvelocity(listofcbs, timestep)
   
     for key in cbspoints.keys(): 
         print(frames)
