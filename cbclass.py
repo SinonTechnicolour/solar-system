@@ -42,4 +42,3 @@ class Moon(celestialbody):
         super().__init__(name, currentpos, mass, velocity, force)
         self.orbits = orbits
 
-
