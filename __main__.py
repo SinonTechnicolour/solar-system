@@ -33,8 +33,9 @@ class ChangeBodyValues(BaseWidget):
         except:
             print(int(self._massmult.value))
 
-class SolarSim(BaseWidget):
 
+
+class SolarSim(BaseWidget):
     earth = cb("Earth", 5.972e24, np.array([-1352.755691812412E+08, 6116.401076129713E+07, 02353.456791794300E+04]), np.array([-1294.302096212603E+01, -2717.804952151386E+01, 1019.574352167041E-03]), np.array([0,0,0]), None)
     sun = cb("Sun",1.989e30, np.array([-7988.634901289927E+05, -7614.964374967902E+05, 2587.556848305213E+04]), np.array([1260.082195736638E-02,-5184.066937527316E-03,-2144.536918918256E-04]), np.array([0,0,0]), None)
     mars = cb("Mars", 6.39e23, np.array([-1705.078259658501E+08,1788.722506792968E+08,7952.027070522420E+06]), np.array([-1668.708010363948E+01,-1457.869007509080E+01,1039.081377919446E-01]),np.array([0,0,0]), None)

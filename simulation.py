@@ -14,10 +14,9 @@ class simulation:
         self.gravity = gravity
         self.frames = frames 
 
-    def runsimulation(self):
-        #takes the value of gravity in use and the list of celestialbodies and adds the forces to the list of bodies
+    
 
-        def addallforcesbetweenplanetstodict(gravityvalue, listofcbs): 
+    def addallforcesbetweenplanetstodict(self, gravityvalue, listofcbs): 
 
             for i, bodyi in enumerate(listofcbs.keys()):
                 j = i+1
@@ -29,24 +28,20 @@ class simulation:
                         listofcbs[bodyj][i]=(-1*(listofcbs[bodyi][j]))
                         j+=1
             return listofcbs
-
-        #updates the position and velocity attributes within discrete examples of the cb class based on force, takes a list with all cbs as input
-        def updatecbspositionandvelocity(listofcbs, timestep):
-            for key in listofcbs.keys():
-                # resets contents of vector force array 
-                key.vectorforce = np.array([0,0,0])
-                for value in listofcbs[key]:
-                    key.vectorforce = np.add(key.vectorforce,listofcbs[key][value])
-                
-                key.updatepositionandvelocity(timestep)
-                
-        #to be called by mpl    
-        def simulate(listofcbs, timestep, gravity):
-            listofcbs = addallforcesbetweenplanetstodict(gravity, listofcbs)
-            updatecbspositionandvelocity(listofcbs, timestep)
-                
-
     
+    #updates the position and velocity attributes within discrete examples of the cb class based on force, takes a list with all cbs as input
+    
+    def updatecbspositionandvelocity(self, listofcbs, timestep):
+        for key in listofcbs.keys():
+            # resets contents of vector force array 
+            key.vectorforce = np.array([0,0,0])
+            for value in listofcbs[key]:
+                key.vectorforce = np.add(key.vectorforce,listofcbs[key][value])
+            key.updatepositionandvelocity(timestep)
+    
+    def runsimulation(self):
+        #takes the value of gravity in use and the list of celestialbodies and adds the forces to the list of bodies
+
         #timestep
         t = 1000
 
@@ -54,8 +49,8 @@ class simulation:
 
         # dict for forces
         cbsforces = self.basecbs
-        cbsforces=  addallforcesbetweenplanetstodict(self.gravity, cbsforces)
-        updatecbspositionandvelocity(cbsforces, t )
+        cbsforces=  self.addallforcesbetweenplanetstodict(self.gravity, cbsforces)
+        self.updatecbspositionandvelocity(cbsforces, t )
         #dict with points to be plotted by mpl
         cbspoints = self.basecbs
 
@@ -76,8 +71,9 @@ class simulation:
         def update_points(frames, cbspoints, listofcbs, timestep, gravity, endpoint):
             print(frames)
             for i in range(100):
-                listofcbs = addallforcesbetweenplanetstodict(gravity, listofcbs)
-                updatecbspositionandvelocity(listofcbs, timestep)
+                
+                listofcbs = self.addallforcesbetweenplanetstodict(gravity, listofcbs)
+                self.updatecbspositionandvelocity(listofcbs, timestep)
         
             for key in cbspoints.keys(): 
                 print(frames)
