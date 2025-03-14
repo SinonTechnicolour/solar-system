@@ -8,30 +8,26 @@ from cbclass import Moon as m
 print("hello world")
 
 class simulation:
-    def __init__(self, basecbs, viewwindow, gravity, frames):
+    def __init__(self, basecbs, viewwindow, gravity, frames, howmanycalcsskipped):
         self.basecbs = basecbs
         self.viewwindow = viewwindow
         self.gravity = gravity
         self.frames = frames 
+        self.howmanycalcsskipped = howmanycalcsskipped
 
-    
-
-    def addallforcesbetweenplanetstodict(self, gravityvalue, listofcbs): 
-
+    @staticmethod
+    def addallforcesbetweenplanetstodict(gravityvalue, listofcbs): 
             for i, bodyi in enumerate(listofcbs.keys()):
                 j = i+1
                 for bodyj in list(listofcbs.keys())[i+1:]:
-                    if bodyi.name == bodyj.name:
-                        pass
-                    else:
-                        listofcbs[bodyi][j]=bodyi.twobodyforce(gravityvalue, bodyj.mass, bodyj.currentpos) 
-                        listofcbs[bodyj][i]=(-1*(listofcbs[bodyi][j]))
-                        j+=1
+                    listofcbs[bodyi][j]=bodyi.twobodyforce(gravityvalue, bodyj.mass, bodyj.currentpos) 
+                    listofcbs[bodyj][i]=(-1*(listofcbs[bodyi][j]))
+                    j+=1
             return listofcbs
     
     #updates the position and velocity attributes within discrete examples of the cb class based on force, takes a list with all cbs as input
-    
-    def updatecbspositionandvelocity(self, listofcbs, timestep):
+    @staticmethod
+    def updatecbspositionandvelocity(listofcbs, timestep):
         for key in listofcbs.keys():
             # resets contents of vector force array 
             key.vectorforce = np.array([0,0,0])
@@ -44,8 +40,6 @@ class simulation:
 
         #timestep
         t = 1000
-
-
 
         # dict for forces
         cbsforces = self.basecbs
@@ -69,14 +63,14 @@ class simulation:
 
         #updates the position of the point based on the frame, each frame gives the next value in the x, y and z axis
         def update_points(frames, cbspoints, listofcbs, timestep, gravity, endpoint):
-            print(frames)
-            for i in range(100):
+
+            for i in range(self.howmanycalcsskipped):
                 
                 listofcbs = self.addallforcesbetweenplanetstodict(gravity, listofcbs)
                 self.updatecbspositionandvelocity(listofcbs, timestep)
-        
+
+
             for key in cbspoints.keys(): 
-                print(frames)
                 key.printbodyattributes()
                 print(f"loop {frames}")
                 (key.point).set_data([key.currentpos[0]],[key.currentpos[1]])
@@ -84,6 +78,8 @@ class simulation:
 
             if frames == endpoint:
                 plt.close()
+            
+            return update_points
 
         # Add labels to axis and graph title 
         ax.set_title('Solar System Sim')
