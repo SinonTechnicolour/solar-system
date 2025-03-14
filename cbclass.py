@@ -5,12 +5,20 @@ import requests
 
 class celestialbody:
     def __init__(self, name, mass, currentpos, velocity, vectorforce, horizonid, point):
+        #string name of celestial body being initialisec
         self.name = name
+        #just an int :) 
         self.mass = mass
+        
+        #currentposition array (x,y,z)
         self.currentpos = currentpos
+        #vector velocity array (x, y, z)
         self.velocity = velocity
+        #vector force acting on the object (array of vectors (x,y,z)) 
         self.vectorforce = vectorforce
+        #integer linking planetary object to id in horizon system
         self.horizonid = horizonid
+        #helper variable that stores planet's plotted point for matplotlib.
         self.point = point 
 
     
@@ -19,14 +27,16 @@ class celestialbody:
     def acceleration(self): 
         return (self.vectorforce / self.mass)
     
-    #returns magnitude () 
+    #returns magnitude 
     def getmagnitude(self, secondbodyposition):
         distance = secondbodyposition - self.currentpos
         return np.linalg.norm(distance)
 
+    #returns unit vector
     def getunitvector(self, magnitude, secondbodyposition):
         return ((secondbodyposition - self.currentpos)/magnitude)
     
+    #return vector twobody force, direction of force calculated as it would affect this object (direction of force calculated is the direction of force applied to this object)
     def twobodyforce(self, gravity, secondbodymass, secondbodyposition): 
         magnitude = self.getmagnitude(secondbodyposition)
         absoluteforce = (gravity * self.mass * secondbodymass)/np.square(magnitude)
@@ -42,10 +52,8 @@ class celestialbody:
         self.currentpos = nextposition
         self.velocity = nextvelocity
 
-
-
-
-
+    # performs api request and does all necessary string operations to retrieve starting position and velocity from horizons api
+    # nasa json returns string :( 
     def getstartpositionandvelocity(self): 
         def splitstring(s, start, end):
             p1, p2 = s.split(start,1)
@@ -81,14 +89,12 @@ class celestialbody:
         self.currentpos = (np.array([x,y,z]))*1000
         self.velocity = (np.array([vx,vy,vz]))*1000
 
-        print(self.currentpos)
-        print(self.velocity)
-
         
-    
+    # helper function that prints attributes
     def printbodyattributes(self):
         print(f"Name: {self.name}\n Mass: {self.mass}\n Position: {self.currentpos}\n Velocity: {self.velocity}\n Force on object: {self.vectorforce}")
 
+#inherits all cb functions and parameters but adds its own parameter "orbits"
 class Moon(celestialbody):
     def __init__(self, name, currentpos, mass, velocity, force, orbits):
         super().__init__(name, currentpos, mass, velocity, force)

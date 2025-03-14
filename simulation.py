@@ -56,7 +56,7 @@ class simulation:
         ax.set_ylim3d(-self.viewwindow, self.viewwindow)
         ax.set_zlim3d(-self.viewwindow, self.viewwindow)
 
-        for key in cbspoints.keys():
+        for key in cbsforces.keys():
                 key.point, = ax.plot([key.currentpos[0]],[key.currentpos[1]],[key.currentpos[2]], marker="o" )
                 print(key.point,)
 
